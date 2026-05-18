@@ -1,0 +1,66 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;700&display=swap');
+
+@theme {
+  --color-bg: #ffffff;
+  --color-text: #0a0a0a;
+  --color-sidebar: #0a0a0a;
+  --color-accent-primary: #ffffff;
+  --color-accent-secondary: #0a0a0a;
+  --color-accent-tertiary: #666666;
+  --color-card: #f4f4f4;
+  --color-border: #0a0a0a;
+  --color-muted: #888888;
+
+  --font-heading: "Bebas Neue", sans-serif;
+  --font-body: "Geist Variable", "Geist", sans-serif;
+  --font-mono: "DM Mono", monospace;
+  --font-geist: "Geist Variable", "Geist", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-text font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading uppercase tracking-wide;
+  }
+
+  * {
+    border-radius: 0 !important;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20;
+  }
+
+  .btn-primary {
+    @apply px-8 py-3 border border-text text-text hover:bg-text hover:text-bg transition-all uppercase tracking-widest font-bold font-body text-xs;
+  }
+
+  .label-tag {
+    @apply font-mono text-xs uppercase tracking-widest text-muted;
+  }
+
+  @keyframes scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-33.333%); }
+  }
+
+  .animate-scroll {
+    animation: scroll 25s linear infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+
+  .cursor-blink::after {
+    content: "_";
+    animation: blink 1s step-end infinite;
+  }
+}
