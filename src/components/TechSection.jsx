@@ -7,18 +7,21 @@ const projects = [
         title: 'i73 Plugin Suite · Heritage Audio',
         description: 'A suite of audio plugins emulating Heritage Audio\'s classic analog hardware — EQ, compressors, guitar and bass amp simulators. Built in C++ with JUCE, combining DSP circuit modelling with ML-driven amp emulation via TensorFlow. Shipped with iLok licensing. Supports macOS and Windows.',
         tech: ['C++', 'JUCE', 'DSP', 'TensorFlow', 'iLok'],
+        image: '/heritage-plugins.png',
         num: '001',
     },
     {
         title: 'i73 Mixer App · Heritage Audio',
         description: 'A C++ desktop application that controls Heritage Audio\'s i73 Pro hardware interfaces over USB — the software backbone of their first digital product line. Built from the ground up as part of a three-year R&D project. Supports macOS and Windows.',
         tech: ['C++', 'JUCE', 'USB / HID'],
+        image: '/heritage-office2.jpg',
         num: '002',
     },
     {
         title: 'Exquis · Dualo by Intuitive Instruments',
         description: 'Contributed to the software stack of the Exquis, an expressive MPE MIDI controller made in France. Researched and built a custom Linux image using the Yocto Project on Raspberry Pi — a minimal OS that boots directly into a JUCE audio host.',
         tech: ['C++', 'JUCE', 'Yocto', 'Linux', 'Raspberry Pi'],
+        image: '/dualo-buttons-teal.jpg',
         num: '003',
     },
 ];
@@ -51,9 +54,18 @@ const TechSection = () => {
                         transition={{ delay: index * 0.08 }}
                         className="border-b border-r border-border p-8 group hover:bg-card transition-colors relative"
                     >
+                        {project.image && (
+                            <div className="mb-6 -mx-8 -mt-8 overflow-hidden border-b border-border">
+                                <img
+                                    src={project.image}
+                                    alt={project.title}
+                                    className="w-full h-48 object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                                />
+                            </div>
+                        )}
+
                         <div className="flex items-start justify-between gap-4 mb-5">
                             <span className="font-mono text-[10px] text-muted">{project.num}</span>
-                            <ExternalLink size={12} className="text-muted opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
                         </div>
 
                         <h3 className="text-2xl md:text-3xl font-heading mb-4 group-hover:opacity-60 transition-colors">

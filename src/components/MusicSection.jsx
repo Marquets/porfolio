@@ -55,6 +55,14 @@ const MusicSection = () => {
                 </span>
             </div>
 
+            <div className="mb-10 overflow-hidden border border-border">
+                <img
+                    src="/music-studio.jpg"
+                    alt="Recording session"
+                    className="w-full h-64 object-cover object-top grayscale hover:grayscale-0 transition-all duration-700"
+                />
+            </div>
+
             <p className="font-body text-sm text-text/50 mb-10 max-w-md leading-relaxed uppercase tracking-wide">
                 My musical journey.
             </p>
