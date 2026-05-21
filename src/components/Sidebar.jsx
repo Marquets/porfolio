@@ -35,10 +35,9 @@ const Sidebar = ({ onSectionSelect, activeSection }) => {
 
                     <div className="mt-6 border-t border-white/10 pt-5">
                         <p className="font-mono text-[11px] leading-relaxed text-white/40 uppercase tracking-widest">
-                            Audio Programmer C++<br />
-                            Frontend Developer<br />
-                            Creative Developer<br />
-                            Musician · Photographer
+                            Audio Developer · Creative Coder<br />
+                            Musician · Photographer<br />
+                            Madrid
                         </p>
                     </div>
                 </div>

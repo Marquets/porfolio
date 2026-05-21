@@ -15,7 +15,7 @@ const bands = [
     {
         name: 'Good Night Sleep',
         url: 'https://open.spotify.com/artist/6tvNxwS3ZSBqOSw9htX4Qg',
-        description: 'A collaborative project where I play mostly guitar, exploring different sonic landscapes.',
+        description: 'A neo-folk collaborative project. I play guitar.',
         role: 'Guitarist',
         platform: 'Spotify',
         year: '2022',
@@ -32,10 +32,10 @@ const bands = [
     {
         name: 'SANTA ANA',
         url: 'https://open.spotify.com/artist/4dOm7N5bjzUs0UwQHH8SZd',
-        description: "A friend's project that I'm helping to produce. Currently working on her first album.",
+        description: "A friend's project that I'm producing. Three singles out: NIÑA GRITANDO AL CIELO, Atentamente, ÉL and sobre su VIENTRE.",
         role: 'Producer',
         platform: 'Spotify',
-        year: '2024',
+        year: '2025',
     },
 ];
 
@@ -56,7 +56,7 @@ const MusicSection = () => {
             </div>
 
             <p className="font-body text-sm text-text/50 mb-10 max-w-md leading-relaxed uppercase tracking-wide">
-                Musical journey across different projects and collaborations.
+                My musical journey.
             </p>
 
             <div className="space-y-0 border-t border-border">

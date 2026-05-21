@@ -16,7 +16,7 @@ const Badge = ({ children }) => (
                 fill="none"
             />
             <text className="font-mono" fontSize="7.5" fill="currentColor" letterSpacing="2">
-                <textPath href="#circle">AVAILABLE · FOR · WORK · 2024 · </textPath>
+                <textPath href="#circle">AVAILABLE · FOR · WORK · 2026 · </textPath>
             </text>
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
@@ -46,7 +46,7 @@ const HomeSection = ({ onSectionSelect }) => {
                 {/* Headline cell */}
                 <div className="border-r border-border p-6 flex flex-col justify-center">
                     <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted mb-2">
-                        Portfolio — 2024
+                        Portfolio — 2026
                     </span>
                     <p className="font-body text-sm text-text/60 max-w-sm leading-relaxed">
                         Audio programmer, frontend developer, and creative coder
@@ -140,7 +140,7 @@ const HomeSection = ({ onSectionSelect }) => {
                             Currently working on
                         </p>
                         <p className="font-body text-sm text-text/80 leading-relaxed">
-                            Audio plugin framework<br />in JUCE / C++
+                            i73 plugin suite<br />Heritage Audio
                         </p>
                     </div>
                 </div>
@@ -177,7 +177,7 @@ const HomeSection = ({ onSectionSelect }) => {
                         What I build
                     </span>
                     <ul className="space-y-2">
-                        {['VST / AU Plugins', 'Web Audio Tools', 'React Interfaces', 'Generative Systems', 'AV Performances'].map(item => (
+                        {['VST / AU / AAX Plugins', 'Web Audio Tools', 'React Interfaces', 'Generative Systems', 'AV Performances'].map(item => (
                             <li key={item} className="font-body text-sm text-text/70 flex items-center gap-2">
                                 <span className="w-1 h-1 bg-text shrink-0" />
                                 {item}

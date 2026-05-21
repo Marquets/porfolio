@@ -4,21 +4,24 @@ import { ExternalLink } from 'lucide-react';
 
 const projects = [
     {
-        title: 'Portfolio Website',
-        description: 'This very site. Built with React, Vite, Tailwind CSS v4, and Framer Motion. Features a live audio playground powered by Tone.js.',
+        title: 'This Portfolio',
+        description: 'This very site. Built with React, Vite, Tailwind CSS and Framer Motion. Includes a live audio playground with a step sequencer powered by Tone.js.',
         tech: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion', 'Tone.js'],
+        url: 'https://marcogp.netlify.app',
         num: '001',
     },
     {
-        title: 'Interactive Audio Visualizer',
-        description: 'WebGL-based real-time audio visualization driven by the Web Audio API. Customizable shaders and MIDI-controllable parameters.',
-        tech: ['JavaScript', 'WebGL', 'Web Audio API', 'GLSL'],
+        title: 'Making Great',
+        description: 'Website for Making Great, an independent creative agency based in Madrid working with brands like Tiffany & Co., Nespresso and Uniqlo. Dark, editorial aesthetic with case study portfolio. Built with Next.js.',
+        tech: ['Next.js', 'Tailwind CSS'],
+        url: 'https://makingreat.netlify.app',
         num: '002',
     },
     {
-        title: 'Band Website — Mucho Mungo',
-        description: 'Full band website with embedded Bandcamp player, tour dates, and a custom CMS for releases and press material.',
-        tech: ['Next.js', 'TypeScript', 'Sanity CMS', 'Tailwind CSS'],
+        title: 'ABM Distribution',
+        description: 'Corporate website for ABM Distribution, a beauty and K-beauty distributor covering 2,000+ retail doors across Spain. Bilingual (ES / EN), built with Next.js.',
+        tech: ['Next.js', 'Tailwind CSS'],
+        url: 'https://abrandsupm.netlify.app',
         num: '003',
     },
 ];
@@ -74,7 +77,11 @@ const FrontendSection = () => {
                     >
                         <div className="flex items-start justify-between gap-4 mb-5">
                             <span className="font-mono text-[10px] text-muted">{project.num}</span>
-                            <ExternalLink size={12} className="text-muted opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
+                            {project.url && (
+                                <a href={project.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
+                                    <ExternalLink size={12} className="text-muted opacity-0 group-hover:opacity-100 transition-opacity shrink-0 hover:text-text" />
+                                </a>
+                            )}
                         </div>
 
                         <h3 className="text-2xl md:text-3xl font-heading mb-4 group-hover:opacity-60 transition-colors">

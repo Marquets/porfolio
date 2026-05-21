@@ -4,21 +4,21 @@ import { ExternalLink } from 'lucide-react';
 
 const projects = [
     {
-        title: 'Audio Plugin Framework',
-        description: 'A modern framework for building VST/AU audio plugins with React-like component architecture.',
-        tech: ['C++', 'JUCE', 'DSP'],
+        title: 'i73 Plugin Suite · Heritage Audio',
+        description: 'A suite of audio plugins emulating Heritage Audio\'s classic analog hardware — EQ, compressors, guitar and bass amp simulators. Built in C++ with JUCE, combining DSP circuit modelling with ML-driven amp emulation via TensorFlow. Shipped with iLok licensing. Supports macOS and Windows.',
+        tech: ['C++', 'JUCE', 'DSP', 'TensorFlow', 'iLok'],
         num: '001',
     },
     {
-        title: 'Real-time Audio Visualizer',
-        description: 'WebGL-based audio visualization tool with customizable effects and MIDI control.',
-        tech: ['JavaScript', 'WebGL', 'Web Audio API'],
+        title: 'i73 Mixer App · Heritage Audio',
+        description: 'A C++ desktop application that controls Heritage Audio\'s i73 Pro hardware interfaces over USB — the software backbone of their first digital product line. Built from the ground up as part of a three-year R&D project. Supports macOS and Windows.',
+        tech: ['C++', 'JUCE', 'USB / HID'],
         num: '002',
     },
     {
-        title: 'Machine Learning Synth',
-        description: 'Experimental synthesizer using ML models to generate unique timbres and textures.',
-        tech: ['Python', 'TensorFlow', 'Max/MSP'],
+        title: 'Exquis · Dualo by Intuitive Instruments',
+        description: 'Contributed to the software stack of the Exquis, an expressive MPE MIDI controller made in France. Researched and built a custom Linux image using the Yocto Project on Raspberry Pi — a minimal OS that boots directly into a JUCE audio host.',
+        tech: ['C++', 'JUCE', 'Yocto', 'Linux', 'Raspberry Pi'],
         num: '003',
     },
 ];
@@ -38,7 +38,7 @@ const TechSection = () => {
             </div>
 
             <p className="font-body text-sm text-text/50 mb-10 max-w-md leading-relaxed uppercase tracking-wide">
-                Audio plugins, DSP systems, and C++ projects for music production.
+                Professional audio software built in C++ — plugins, desktop applications, and embedded systems.
             </p>
 
             <div className="grid grid-cols-1 gap-0 border-t border-l border-border">

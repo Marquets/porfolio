@@ -10,34 +10,28 @@ const works = [
         video: '/hydra-live.mp4',
     },
     {
-        title: 'Generative Audio-Visual System',
-        description: 'A system that generates real-time visuals driven by audio analysis — FFT bands map to shader parameters, creating evolving abstract compositions.',
-        tags: ['Generative', 'WebGL', 'Tone.js'],
+        title: 'The Coxx Guitar Space Rotator',
+        description: 'An augmented electric guitar built at Aalborg University. A Teensy 4.0 board embedded in the body adds a dual high-pass filter driven by an LFO — a souped-up wah-wah where you can swap the waveform between sine, sawtooth and pulse. Controlled from knobs on the guitar, no pedal needed. Documented as a NIME paper.',
+        tags: ['Teensy 4.0', 'DSP', 'Hardware', 'NIME'],
         num: '002',
     },
     {
-        title: 'Step Sequencer UI',
-        description: 'Tactile, hardware-inspired step sequencer built in the browser. Grid interaction, BPM control, polyrhythmic patterns — all synthesized with the Web Audio API.',
-        tags: ['Web Audio', 'React', 'UI Design'],
+        title: 'Playing a/part',
+        description: 'A tangible multiplayer instrument for two players with different skill levels — one handles melody, one handles rhythm. Sliders and light-dependent resistors control a PureData sound engine with FM, additive synthesis and Karplus-Strong patches. Presented at SMC 2020, Aalborg University.',
+        tags: ['PureData', 'OSC', 'Hardware', 'SMC 2020'],
         num: '003',
     },
     {
-        title: 'Typography in Motion',
-        description: 'Experimental typographic animations using GSAP and SVG path morphing. Explores letterforms as expressive, animated objects rather than static glyphs.',
-        tags: ['GSAP', 'SVG', 'Typography'],
+        title: 'Dim Moon',
+        description: 'A web tool built for a concert at Wurlitzer Ballroom — musicians joining the show can load the setlist, mute individual stems, and practice their parts at home before the gig.',
+        tags: ['React', 'Web Audio', 'Netlify'],
         num: '004',
-    },
-    {
-        title: 'Noise Texture Generator',
-        description: 'Canvas-based procedural noise explorer — Perlin, Simplex, Voronoi — with real-time parameter control and PNG export for use in design work.',
-        tags: ['Canvas 2D', 'Algorithms', 'Design Tool'],
-        num: '005',
     },
 ];
 
 const disciplines = [
-    'Generative Art', 'Creative Coding', 'Audio-Visual',
-    'Motion Design', 'Procedural Systems', 'Experimental UI',
+    'AV Performance', 'Live Coding', 'Instrument Design',
+    'Hardware Hacking', 'Creative Coding', 'Audio-Visual',
 ];
 
 const VideoPlayer = ({ src }) => {
