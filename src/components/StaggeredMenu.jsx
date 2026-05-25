@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const sections = [
-    { id: 'tech',        label: 'Audio Dev C++',   num: '01', sub: 'Plugins & DSP' },
-    { id: 'frontend',    label: 'Frontend',         num: '02', sub: 'React & web' },
-    { id: 'creative',    label: 'Creative Dev',     num: '03', sub: 'Generative & AV' },
-    { id: 'career',      label: 'Studies / Career', num: '04', sub: 'Education & work' },
-    { id: 'music',       label: 'Music',            num: '05', sub: 'Projects & bands' },
-    { id: 'photography', label: 'Photo',            num: '06', sub: '35mm film' },
+    { id: 'engineer', label: 'Software engineer', num: '01', sub: 'Audio C++ · Frontend' },
+    { id: 'creative', label: 'Creative',          num: '02', sub: 'Music · Photo · AV' },
+    { id: 'career',   label: 'Career',            num: '03', sub: 'Education & work' },
 ];
 
 const StaggeredMenu = ({ onSectionSelect, activeSection }) => {
@@ -24,7 +21,7 @@ const StaggeredMenu = ({ onSectionSelect, activeSection }) => {
             <button
                 onClick={() => setIsOpen(v => !v)}
                 aria-label={isOpen ? 'Close menu' : 'Open menu'}
-                className="fixed top-[5px] left-4 z-[70] w-7 h-7 bg-bg flex items-center justify-center hover:bg-white/80 transition-colors"
+                className="fixed top-[5px] left-4 z-[70] w-7 h-7 bg-card border border-border flex items-center justify-center hover:border-accent-primary hover:text-accent-primary transition-colors"
             >
                 <motion.span
                     animate={{ rotate: isOpen ? 45 : 0 }}
@@ -111,7 +108,7 @@ const StaggeredMenu = ({ onSectionSelect, activeSection }) => {
                                     onClick={() => handleSelect(section.id)}
                                     className={`flex items-baseline gap-5 py-[14px] border-b border-white/[0.08] text-left group transition-colors duration-150 ${
                                         activeSection === section.id
-                                            ? 'text-white'
+                                            ? 'text-accent-primary'
                                             : 'text-white/35 hover:text-white'
                                     }`}
                                 >
@@ -128,7 +125,7 @@ const StaggeredMenu = ({ onSectionSelect, activeSection }) => {
                                     </div>
                                     <motion.span
                                         animate={{ opacity: activeSection === section.id ? 1 : 0, x: activeSection === section.id ? 0 : -6 }}
-                                        className="font-mono text-[11px] text-white/40 shrink-0"
+                                        className="font-mono text-[11px] text-accent-primary shrink-0"
                                     >
                                         →
                                     </motion.span>
