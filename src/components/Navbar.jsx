@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const links = [
-  { id: 'engineer', label: 'Software engineer' },
+  { id: 'engineer', label: 'Developer' },
   { id: 'creative', label: 'Creative' },
   { id: 'career',   label: 'Career' },
 ];

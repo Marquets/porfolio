@@ -20,10 +20,7 @@ const PhotoSection = () => {
         <div>
             {/* Section header */}
             <div className="flex items-end justify-between mb-12 pb-4 border-b border-border">
-                <div>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted block mb-2">06 — Section</span>
-                    <h2 className="text-6xl md:text-8xl font-heading leading-none">PHOTO</h2>
-                </div>
+                <h2 className="text-6xl md:text-8xl font-heading leading-none">PHOTO</h2>
                 <span className="font-mono text-xs text-muted hidden md:block">35mm film</span>
             </div>
 

@@ -101,10 +101,7 @@ const CreativeSection = () => {
     return (
         <div>
             <div className="flex items-end justify-between mb-12 pb-4 border-b border-border">
-                <div>
-                    <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted block mb-2">03 — Section</span>
-                    <h2 className="text-5xl md:text-7xl font-heading leading-none">CREATIVE<br />DEV</h2>
-                </div>
+                <h2 className="text-5xl md:text-7xl font-heading leading-none">CREATIVE<br />DEV</h2>
                 <span className="font-mono text-xs text-muted hidden md:block">{works.length} works</span>
             </div>
 

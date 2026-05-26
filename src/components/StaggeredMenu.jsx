@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const sections = [
-    { id: 'engineer', label: 'Software engineer', num: '01', sub: 'Audio C++ · Frontend' },
+    { id: 'engineer', label: 'Developer', num: '01', sub: 'Audio C++ · Frontend' },
     { id: 'creative', label: 'Creative',          num: '02', sub: 'Music · Photo · AV' },
     { id: 'career',   label: 'Career',            num: '03', sub: 'Education & work' },
 ];
