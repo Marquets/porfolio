@@ -18,16 +18,17 @@ const Navbar = ({ activeSection }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 1.2, duration: 0.6 }}
-      className="fixed top-0 left-0 right-0 z-50 grid grid-cols-4 items-center px-6 md:px-10 h-12"
+      className="fixed top-0 left-0 right-0 z-50 grid grid-cols-[auto_1fr_1fr_1fr] md:grid-cols-4 items-center gap-2 px-4 md:px-10 h-12"
       style={{ mixBlendMode: 'difference' }}
     >
       {/* Copyright — far left */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="text-base transition-colors text-left"
+        className="text-sm md:text-base transition-colors text-left whitespace-nowrap"
         style={{ fontFamily: '"Inter", sans-serif', fontOpticalSizing: 'auto', color: 'white' }}
       >
-        © Marco González
+        <span className="md:hidden">© MGP</span>
+        <span className="hidden md:inline">© Marco González</span>
       </button>
 
       {/* 3 nav links */}
@@ -41,11 +42,10 @@ const Navbar = ({ activeSection }) => {
             onClick={() => scrollTo(id)}
             onMouseEnter={() => setHovered(id)}
             onMouseLeave={() => setHovered(null)}
-            className="relative flex flex-col items-center pb-1 transition-colors duration-150"
+            className="relative flex flex-col items-center pb-1 transition-colors duration-150 text-[13px] md:text-base"
             style={{
               fontFamily: '"Inter", sans-serif',
               fontOpticalSizing: 'auto',
-              fontSize: '16px',
               fontWeight: 400,
               color: 'white',
             }}

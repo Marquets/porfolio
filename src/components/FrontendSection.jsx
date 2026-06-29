@@ -1,6 +1,5 @@
 import React from 'react';
-// import Masonry from './Masonry';
-import InfiniteMenu from './InfiniteMenu';
+import CardSwap, { Card } from './CardSwap';
 
 const projects = [
     {
@@ -78,16 +77,44 @@ const FrontendSection = () => {
                 </div>
             </div>
 
-            {/* InfiniteMenu fills the rest */}
-            <div style={{ height: '100vh', position: 'relative' }}>
-                <InfiniteMenu
-                    items={projects.map(p => ({
-                        image: p.img,
-                        link: p.url,
-                        title: p.title,
-                        description: p.description || '',
-                    }))}
-                />
+            {/* Card stack showcase */}
+            <div className="relative min-h-[90vh] flex items-start lg:items-center pt-10 lg:pt-0 overflow-hidden lg:overflow-visible">
+                <div className="max-w-md relative z-10">
+                    <p className="font-mono text-xs uppercase tracking-widest text-muted mb-4">Selected work</p>
+                    <p className="text-2xl md:text-3xl font-heading leading-snug text-text/80">
+                        A handful of sites I designed and built — branding, landing pages and live experiences.
+                    </p>
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-muted/60 mt-6">
+                        Tap a card to open the live site
+                    </p>
+                </div>
+
+                <CardSwap
+                    width={620}
+                    height={440}
+                    cardDistance={70}
+                    verticalDistance={78}
+                    delay={4000}
+                    pauseOnHover
+                    skewAmount={5}
+                    easing="elastic"
+                    onCardClick={i => window.open(projects[i].url, '_blank', 'noopener')}
+                >
+                    {projects.map(p => (
+                        <Card key={p.id} customClass="project-card">
+                            <div className="project-card__media">
+                                <img src={p.img} alt={p.title} loading="lazy" />
+                            </div>
+                            <div className="project-card__bar">
+                                <div>
+                                    <div className="project-card__title">{p.title}</div>
+                                    <div className="project-card__desc">{p.description}</div>
+                                </div>
+                                <span className="project-card__arrow">↗</span>
+                            </div>
+                        </Card>
+                    ))}
+                </CardSwap>
             </div>
         </div>
     );

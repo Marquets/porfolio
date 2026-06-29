@@ -3,7 +3,16 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
 const ORANGE = '#FF5126';
-const SPINE_BG = '#F4F0E8';
+const CASE_BG = '#E9E6DD';
+
+// Retro cassette palette — one J-card accent per release
+const ACCENTS = [
+    { label: '#FF5126', text: '#F4F0E8' }, // orange
+    { label: '#1F7A6B', text: '#F4F0E8' }, // teal
+    { label: '#E8B23A', text: '#1a1a1a' }, // mustard
+    { label: '#C9405A', text: '#F4F0E8' }, // magenta
+    { label: '#5B6CFF', text: '#F4F0E8' }, // blue
+];
 
 const releases = [
     {
@@ -12,25 +21,28 @@ const releases = [
         album: 'Moth Bath',
         role: 'Band Member',
         year: '2023',
-        bandcampUrl: 'https://muchomungo.bandcamp.com/album/moth-bath',
+        url: 'https://open.spotify.com/album/7eEZfX4sXjP8tbI5BfUBPi',
+        embed: { type: 'spotify', kind: 'album', id: '7eEZfX4sXjP8tbI5BfUBPi' },
         description: 'My main project and band. Our debut album showcasing our garage-psych sound.',
     },
     {
         id: 2,
         name: 'Good Night Sleep',
-        album: 'Singles',
+        album: 'Spring Selection',
         role: 'Guitarist',
         year: '2022',
-        spotifyId: '6tvNxwS3ZSBqOSw9htX4Qg',
+        url: 'https://open.spotify.com/album/6GlnPq3ByDD0PItWBChDpf',
+        embed: { type: 'spotify', kind: 'album', id: '6GlnPq3ByDD0PItWBChDpf' },
         description: 'A neo-folk collaborative project. I play guitar.',
     },
     {
         id: 3,
         name: 'Dim Moon',
-        album: "Child's Lament",
+        album: 'The Weather',
         role: 'Solo Artist',
         year: '2021',
-        bandcampUrl: 'https://dimmoon.bandcamp.com/',
+        url: 'https://open.spotify.com/album/4CJ1n8uGbvpeUSzdPf6CuA',
+        embed: { type: 'spotify', kind: 'album', id: '4CJ1n8uGbvpeUSzdPf6CuA' },
         description: 'My personal project where I have complete creative liberty to experiment and express myself.',
     },
     {
@@ -39,9 +51,29 @@ const releases = [
         album: 'Singles',
         role: 'Producer',
         year: '2025',
-        spotifyId: '4dOm7N5bjzUs0UwQHH8SZd',
+        url: 'https://open.spotify.com/track/6l02t9A8nM1QZIowImYfDl',
+        embed: { type: 'spotify', kind: 'track', id: '6l02t9A8nM1QZIowImYfDl' },
         description: 'Producing singles: NIÑA GRITANDO AL CIELO, Atentamente, ÉL and sobre su VIENTRE.',
     },
+    {
+        id: 5,
+        name: 'TV Haircuts',
+        album: 'Video',
+        role: 'Project',
+        year: '2024',
+        url: 'https://open.spotify.com/album/19s6TGmlkCRIyB27rxNddT',
+        embed: { type: 'spotify', kind: 'album', id: '19s6TGmlkCRIyB27rxNddT' },
+        description: 'TV Haircuts project.',
+    },
+];
+
+const videos = [
+    { id: 'PvQ4ZBxqbug', start: 651, autoplay: true, label: 'Live performance' },
+    { id: 'xkIUIg2qO9I', autoplay: true, label: 'Live performance' },
+    { id: 'aX3ULekWVkM', autoplay: true, label: 'Live performance' },
+    { id: 'g7-6VKMUSRY', autoplay: true, label: 'Live performance' },
+    { id: 'hP-V2X52bGg', autoplay: true, label: 'Live performance' },
+    { id: '_RNaoJl4wEQ', autoplay: true, label: 'Live performance' },
 ];
 
 // Vertical text running bottom-to-top (book-spine style)
@@ -55,191 +87,23 @@ const Vertical = ({ children, style }) => (
     }}>{children}</span>
 );
 
-const Asterisk = ({ size = 18 }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.2" fill="none" strokeLinecap="round">
-        <line x1="12" y1="3" x2="12" y2="21" />
-        <line x1="3" y1="12" x2="21" y2="12" />
-        <line x1="5.6" y1="5.6" x2="18.4" y2="18.4" />
-        <line x1="18.4" y1="5.6" x2="5.6" y2="18.4" />
-    </svg>
+// A small dark index strip (cassette case hinge marks, top & bottom)
+const CaseCap = () => (
+    <span style={{ width: 24, height: 4, background: '#1a1a1a', opacity: 0.65 }} />
 );
 
-// Four distinct spine layouts (one per release, inspired by editorial book spines)
-const layouts = [
-    // 0 — Pill caps + ID circle in the middle
-    ({ release }) => (
-        <div style={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '20px 0 16px',
-        }}>
-            <div style={{
-                border: `1.4px solid ${ORANGE}`,
-                borderRadius: 999,
-                padding: '14px 0',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: 180,
-            }}>
-                <Vertical style={{
-                    fontFamily: 'var(--font-heading)',
-                    fontWeight: 900,
-                    fontSize: 20,
-                    letterSpacing: '-0.01em',
-                    textTransform: 'uppercase',
-                }}>{release.name}</Vertical>
-            </div>
-            <div style={{
-                width: 38, height: 38, borderRadius: '50%',
-                border: `1.4px solid ${ORANGE}`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: 18,
-            }}>
-                {release.id}
-            </div>
-            <div style={{
-                border: `1.4px solid ${ORANGE}`,
-                borderRadius: 999,
-                padding: '12px 0',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: 150,
-            }}>
-                <Vertical style={{
-                    fontFamily: 'var(--font-mono, monospace)',
-                    fontSize: 9,
-                    letterSpacing: '0.22em',
-                    textTransform: 'uppercase',
-                }}>{release.album} · {release.role}</Vertical>
-            </div>
-            <span style={{
-                fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 9, letterSpacing: '0.1em',
-            }}>marcogp</span>
-        </div>
-    ),
+// Glossy plastic sheen overlay shared by every cassette
+const sheen = {
+    position: 'absolute', inset: 0, pointerEvents: 'none',
+    background: 'linear-gradient(90deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 22%, rgba(0,0,0,0.06) 50%, rgba(255,255,255,0) 80%, rgba(255,255,255,0.4) 100%)',
+};
 
-    // 1 — Title repeated twice, super bold (à la "GRAPHIC FEST GRAPHIC FEST")
-    ({ release }) => (
-        <div style={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '18px 0 16px',
-        }}>
-            <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 0 }}>
-                <Vertical style={{
-                    fontFamily: 'var(--font-heading)',
-                    fontWeight: 900, fontSize: 26,
-                    letterSpacing: '-0.03em', lineHeight: 0.92,
-                    textTransform: 'uppercase',
-                }}>{release.name}</Vertical>
-                <Vertical style={{
-                    fontFamily: 'var(--font-heading)',
-                    fontWeight: 900, fontSize: 26,
-                    letterSpacing: '-0.03em', lineHeight: 0.92,
-                    textTransform: 'uppercase',
-                }}>{release.name}</Vertical>
-            </div>
-            <Vertical style={{
-                fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 9, letterSpacing: '0.22em',
-                textTransform: 'uppercase', marginBottom: 8,
-            }}>{release.album} · {release.role}</Vertical>
-            <span style={{
-                fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 9, letterSpacing: '0.1em',
-            }}>marcogp</span>
-        </div>
-    ),
+// Uniform cassette case dimensions — sameness is what reads as "tapes"
+const CASS_W = 70;
+const CASS_H = 600;
 
-    // 2 — Asterisks bracketing a giant centered title
-    ({ release }) => (
-        <div style={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '24px 0 16px',
-        }}>
-            <Asterisk size={22} />
-            <Vertical style={{
-                fontFamily: 'var(--font-heading)',
-                fontWeight: 900, fontSize: 30,
-                letterSpacing: '-0.025em', lineHeight: 1,
-                textTransform: 'uppercase',
-            }}>{release.name}</Vertical>
-            <Asterisk size={22} />
-            <span style={{
-                fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 9, letterSpacing: '0.1em',
-            }}>marcogp</span>
-        </div>
-    ),
-
-    // 3 — Big stylized number + minimal text (à la "PALETTE mini PASTEL / 5")
-    ({ release }) => (
-        <div style={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '28px 8px 16px',
-        }}>
-            <div style={{
-                display: 'flex', flexDirection: 'column',
-                alignItems: 'center', gap: 4,
-                fontFamily: 'var(--font-heading)',
-                fontWeight: 600, fontSize: 12,
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
-                textAlign: 'center',
-                lineHeight: 1.2,
-            }}>
-                <span>{release.album}</span>
-                <span style={{ fontStyle: 'italic', fontWeight: 300, fontSize: 11, textTransform: 'lowercase' }}>
-                    {release.role.toLowerCase()}
-                </span>
-            </div>
-            <div style={{
-                fontFamily: 'var(--font-heading)',
-                fontWeight: 300, fontSize: 140,
-                lineHeight: 0.78, letterSpacing: '-0.06em',
-            }}>
-                {release.id}
-            </div>
-            <Vertical style={{
-                fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 9, letterSpacing: '0.22em',
-                textTransform: 'uppercase',
-            }}>{release.name}</Vertical>
-            <span style={{
-                fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 9, letterSpacing: '0.1em',
-            }}>marcogp</span>
-        </div>
-    ),
-];
-
-const SPINE_SIZES = [
-    { w: 108, h: 660 },
-    { w: 94,  h: 700 },
-    { w: 128, h: 620 },
-    { w: 100, h: 680 },
-];
-
-const Spine = ({ release, index, onClick }) => {
-    const { w, h } = SPINE_SIZES[index % SPINE_SIZES.length];
-    const Layout = layouts[index % layouts.length];
+const Cassette = ({ release, index, onClick }) => {
+    const accent = ACCENTS[index % ACCENTS.length];
 
     return (
         <motion.button
@@ -251,71 +115,71 @@ const Spine = ({ release, index, onClick }) => {
             onClick={onClick}
             aria-label={`Open ${release.name}`}
             style={{
-                width: w,
-                height: h,
-                background: SPINE_BG,
-                color: ORANGE,
+                width: CASS_W,
+                height: CASS_H,
+                background: CASE_BG,
+                color: '#1a1a1a',
                 flexShrink: 0,
-                boxShadow: '2px 0 10px rgba(0,0,0,0.45), -1px 0 4px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(0,0,0,0.05)',
+                boxShadow: '2px 0 10px rgba(0,0,0,0.45), -1px 0 4px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(0,0,0,0.08)',
                 cursor: 'pointer',
                 border: 0,
                 padding: 0,
                 fontFamily: 'inherit',
                 position: 'relative',
                 transformOrigin: 'bottom center',
+                overflow: 'hidden',
             }}
         >
-            <Layout release={release} />
+            <span style={sheen} />
+            {/* case edge lines */}
+            <span style={{ position: 'absolute', top: 0, bottom: 0, left: 6, width: 1, background: 'rgba(0,0,0,0.12)' }} />
+            <span style={{ position: 'absolute', top: 0, bottom: 0, right: 6, width: 1, background: 'rgba(0,0,0,0.12)' }} />
+
+            <div style={{
+                position: 'relative', height: '100%',
+                display: 'flex', flexDirection: 'column',
+                alignItems: 'center', justifyContent: 'space-between',
+                padding: '14px 0',
+            }}>
+                {/* top — tape type */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                    <CaseCap />
+                    <Vertical style={{ fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '0.25em', textTransform: 'uppercase', opacity: 0.55 }}>
+                        Type II · Chrome
+                    </Vertical>
+                </div>
+
+                {/* colored J-card label */}
+                <div style={{
+                    flex: 1, width: 'calc(100% - 16px)', margin: '12px 8px',
+                    background: accent.label, color: accent.text,
+                    boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.12)',
+                    display: 'flex', flexDirection: 'column',
+                    alignItems: 'center', justifyContent: 'space-between',
+                    padding: '16px 0',
+                }}>
+                    <Vertical style={{ fontFamily: 'var(--font-mono)', fontSize: 8, letterSpacing: '0.25em', textTransform: 'uppercase', opacity: 0.8 }}>
+                        marcogp tapes
+                    </Vertical>
+                    <Vertical style={{ fontFamily: 'var(--font-heading)', fontWeight: 900, fontSize: 24, letterSpacing: '-0.02em', lineHeight: 0.95, textTransform: 'uppercase' }}>
+                        {release.name}
+                    </Vertical>
+                    <Vertical style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase', opacity: 0.85 }}>
+                        {release.album}
+                    </Vertical>
+                </div>
+
+                {/* bottom — side + year */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                    <Vertical style={{ fontFamily: 'var(--font-mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+                        Side A · {release.year}
+                    </Vertical>
+                    <CaseCap />
+                </div>
+            </div>
         </motion.button>
     );
 };
-
-// Decorative tilted spine leaning at the end of the shelf
-const TiltedSpine = () => (
-    <motion.div
-        initial={{ y: 80, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ delay: 0.65, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        aria-hidden="true"
-        style={{
-            width: 118,
-            height: 600,
-            background: SPINE_BG,
-            color: ORANGE,
-            flexShrink: 0,
-            marginLeft: -54,
-            transformOrigin: 'bottom left',
-            transform: 'rotate(-9deg)',
-            boxShadow: '6px 8px 24px rgba(0,0,0,0.55), -1px 0 4px rgba(0,0,0,0.2)',
-            position: 'relative',
-            zIndex: 1,
-        }}
-    >
-        <div style={{
-            height: '100%', display: 'flex', flexDirection: 'column',
-            alignItems: 'center', justifyContent: 'space-between',
-            padding: '24px 0 16px',
-        }}>
-            <Vertical style={{
-                fontFamily: 'var(--font-heading)',
-                fontWeight: 900, fontSize: 30,
-                letterSpacing: '-0.025em',
-                textTransform: 'uppercase',
-            }}>MARCO GP</Vertical>
-            <Vertical style={{
-                fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 9,
-                letterSpacing: '0.28em',
-                textTransform: 'uppercase',
-            }}>portfolio · 2026</Vertical>
-            <span style={{
-                fontFamily: 'var(--font-mono, monospace)',
-                fontSize: 9, letterSpacing: '0.1em',
-            }}>marcogp</span>
-        </div>
-    </motion.div>
-);
 
 const Modal = ({ release, onClose }) => (
     <motion.div
@@ -355,10 +219,10 @@ const Modal = ({ release, onClose }) => (
                 <X size={14} />
             </button>
 
-            {release.spotifyId ? (
+            {release.embed?.type === 'spotify' ? (
                 <iframe
                     style={{ display: 'block', borderRadius: 0 }}
-                    src={`https://open.spotify.com/embed/artist/${release.spotifyId}?utm_source=generator&theme=0`}
+                    src={`https://open.spotify.com/embed/${release.embed.kind}/${release.embed.id}?utm_source=generator&theme=0`}
                     width="100%"
                     height="352"
                     frameBorder="0"
@@ -366,29 +230,46 @@ const Modal = ({ release, onClose }) => (
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                     loading="lazy"
                 />
+            ) : release.embed?.type === 'bandcamp' ? (
+                <iframe
+                    style={{ display: 'block', border: 0, width: '100%', height: 472 }}
+                    src={`https://bandcamp.com/EmbeddedPlayer/album=${release.embed.albumId}/size=large/bgcol=0a0a0a/linkcol=ff5126/tracklist=true/transparent=true/`}
+                    seamless
+                    loading="lazy"
+                    title={`${release.name} — ${release.album}`}
+                />
+            ) : release.embed?.type === 'youtube' ? (
+                <iframe
+                    style={{ display: 'block', border: 0, width: '100%', aspectRatio: '16 / 9' }}
+                    src={`https://www.youtube-nocookie.com/embed/${release.embed.id}${release.embed.start ? `?start=${release.embed.start}` : ''}`}
+                    title={release.name}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    loading="lazy"
+                />
             ) : (
                 <div style={{ padding: 32 }}>
                     <h3 style={{ fontSize: 28, fontWeight: 900, fontFamily: 'var(--font-heading)', marginBottom: 4, color: '#fff' }}>
                         {release.name}
                     </h3>
-                    <p style={{ fontFamily: 'monospace', fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.2em', color: ORANGE, marginBottom: 20 }}>
+                    <p style={{ fontFamily: 'var(--font-mono)', fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.2em', color: ORANGE, marginBottom: 20 }}>
                         {release.album} · {release.role} · {release.year}
                     </p>
                     <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', lineHeight: 1.7, marginBottom: 28 }}>
                         {release.description}
                     </p>
                     <a
-                        href={release.bandcampUrl}
+                        href={release.url}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
-                            display: 'inline-block', fontFamily: 'monospace', fontSize: 11,
+                            display: 'inline-block', fontFamily: 'var(--font-mono)', fontSize: 11,
                             textTransform: 'uppercase', letterSpacing: '0.15em',
                             padding: '10px 20px', backgroundColor: ORANGE, color: '#0a0a0a',
                             textDecoration: 'none', fontWeight: 700,
                         }}
                     >
-                        Listen on Bandcamp ↗
+                        Listen ↗
                     </a>
                 </div>
             )}
@@ -418,34 +299,70 @@ const MusicSection = () => {
                 My musical journey as performer, guitarist and producer.
             </p>
 
-            {/* The shelf */}
-            <div style={{ position: 'relative', overflowX: 'auto', overflowY: 'visible' }}>
-                <div style={{ minWidth: 'fit-content' }}>
-                    <div style={{
-                        display: 'flex',
-                        alignItems: 'flex-end',
-                        gap: 14,
-                        paddingTop: 60,
-                        paddingLeft: 16,
-                        paddingRight: 32,
-                    }}>
-                        {releases.map((release, i) => (
-                            <Spine
-                                key={release.id}
-                                release={release}
-                                index={i}
-                                onClick={() => setSelected(release)}
-                            />
-                        ))}
-                        <TiltedSpine />
-                    </div>
+            {/* Shelf + live video */}
+            <div className="flex flex-col lg:flex-row lg:items-end gap-10">
+                {/* The shelf */}
+                <div style={{ position: 'relative', overflowX: 'auto', overflowY: 'visible', flexShrink: 0 }}>
+                    <div style={{ minWidth: 'fit-content' }}>
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'flex-end',
+                            gap: 14,
+                            paddingTop: 60,
+                            paddingLeft: 16,
+                            paddingRight: 32,
+                        }}>
+                            {releases.map((release, i) => (
+                                <Cassette
+                                    key={release.id}
+                                    release={release}
+                                    index={i}
+                                    onClick={() => setSelected(release)}
+                                />
+                            ))}
+                        </div>
 
-                    {/* Shelf surface — spans the full content width */}
-                    <div style={{ height: 2, background: ORANGE }} />
-                    <div style={{
-                        height: 22,
-                        background: 'linear-gradient(180deg, rgba(255,81,38,0.18) 0%, rgba(255,81,38,0) 100%)',
-                    }} />
+                        {/* Shelf surface — spans the full content width */}
+                        <div style={{ height: 2, background: ORANGE }} />
+                        <div style={{
+                            height: 22,
+                            background: 'linear-gradient(180deg, rgba(255,81,38,0.18) 0%, rgba(255,81,38,0) 100%)',
+                        }} />
+                    </div>
+                </div>
+
+                {/* Live performance videos */}
+                <div className="w-full lg:flex-1 pb-6 grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {videos.map(v => {
+                        const params = new URLSearchParams({
+                            playsinline: '1',
+                            controls: '0',
+                            rel: '0',
+                            modestbranding: '1',
+                            iv_load_policy: '3',
+                            disablekb: '1',
+                            loop: '1',
+                            playlist: v.id,
+                        });
+                        if (v.start) params.set('start', String(v.start));
+                        if (v.autoplay) { params.set('autoplay', '1'); params.set('mute', '1'); }
+                        return (
+                            <div key={v.id} className="min-w-0">
+                                <div style={{ position: 'relative', width: '100%', paddingTop: '56.25%', border: `1px solid ${ORANGE}33`, overflow: 'hidden' }}>
+                                    <iframe
+                                        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
+                                        src={`https://www.youtube-nocookie.com/embed/${v.id}?${params.toString()}`}
+                                        title={v.label}
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        allowFullScreen
+                                        loading="lazy"
+                                    />
+                                    {/* transparent layer blocks YouTube's hover chrome */}
+                                    <span aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 1 }} />
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
 
