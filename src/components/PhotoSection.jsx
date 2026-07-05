@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const photos = [
@@ -15,6 +15,25 @@ const photos = [
 
 const PhotoSection = () => {
     const [lightbox, setLightbox] = useState(null);
+    const closeRef = useRef(null);
+    const lastFocusedRef = useRef(null);
+
+    // When the lightbox opens: remember focus, move it into the dialog,
+    // and let Escape close it. Restore focus to the trigger on close.
+    useEffect(() => {
+        if (!lightbox) return;
+        lastFocusedRef.current = document.activeElement;
+        closeRef.current?.focus();
+
+        const onKeyDown = (e) => {
+            if (e.key === 'Escape') setLightbox(null);
+        };
+        document.addEventListener('keydown', onKeyDown);
+        return () => {
+            document.removeEventListener('keydown', onKeyDown);
+            lastFocusedRef.current?.focus?.();
+        };
+    }, [lightbox]);
 
     return (
         <div>
@@ -64,6 +83,9 @@ const PhotoSection = () => {
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 bg-text/95 z-[100] flex items-center justify-center p-8"
                         onClick={() => setLightbox(null)}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label={`Photo: ${lightbox.title}`}
                     >
                         <motion.div
                             initial={{ scale: 0.95 }}
@@ -82,8 +104,10 @@ const PhotoSection = () => {
                                     {lightbox.title}
                                 </span>
                                 <button
+                                    ref={closeRef}
                                     onClick={() => setLightbox(null)}
-                                    className="font-mono text-[10px] uppercase tracking-widest text-white/40 hover:text-white transition-colors"
+                                    aria-label="Close photo viewer"
+                                    className="font-mono text-[10px] uppercase tracking-widest text-white/40 hover:text-white focus-visible:text-white focus-visible:outline focus-visible:outline-1 focus-visible:outline-white transition-colors"
                                 >
                                     ✕ Close
                                 </button>

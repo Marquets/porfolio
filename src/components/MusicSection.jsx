@@ -290,9 +290,6 @@ const MusicSection = () => {
         <div>
             <div className="flex items-end justify-between mb-12 pb-4 border-b border-border">
                 <h2 className="text-6xl md:text-8xl font-heading leading-none">Music</h2>
-                <span className="font-mono text-xs text-muted hidden md:block">
-                    {releases.length} projects
-                </span>
             </div>
 
             <p className="font-body text-sm text-text/50 mb-12 max-w-md leading-relaxed uppercase tracking-wide">

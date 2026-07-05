@@ -1,8 +1,8 @@
 .card-swap-container {
   position: absolute;
   top: 50%;
-  right: 50%;
-  transform: translate(35%, -45%);
+  right: 0;
+  transform: translate(-22%, -45%);
   transform-origin: center center;
 
   perspective: 1100px;

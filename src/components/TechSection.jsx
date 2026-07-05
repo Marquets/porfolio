@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import ScrollStack, { ScrollStackItem } from './ScrollStack';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const projects = [
     {
@@ -27,10 +28,10 @@ const projects = [
     },
 ];
 
-// Desktop card — fills the pinned ScrollStack card (image left, info right)
+// Desktop card — image left, info right
 const ProjectCard = ({ project }) => (
-    <div className="flex h-full group overflow-hidden" style={{ borderRadius: '24px' }}>
-        <div className="w-[65%] shrink-0 overflow-hidden">
+    <div className="flex h-full group overflow-hidden border border-border" style={{ borderRadius: '24px' }}>
+        <div className="w-[55%] shrink-0 overflow-hidden">
             <img
                 src={project.image}
                 alt={project.title}
@@ -41,11 +42,11 @@ const ProjectCard = ({ project }) => (
             <div className="flex flex-col gap-3">
                 <span className="font-mono text-xs text-muted">({project.year})</span>
                 <h3 className="text-2xl font-heading leading-tight">{project.title}</h3>
-                <p className="text-sm text-text/50 leading-relaxed font-body line-clamp-4">
+                <p className="text-sm text-text/50 leading-relaxed font-body">
                     {project.description}
                 </p>
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 pt-4">
                 {project.tech.map((tag) => (
                     <span key={tag} className="font-mono text-xs text-text/40 tracking-wide">{tag}</span>
                 ))}
@@ -54,9 +55,9 @@ const ProjectCard = ({ project }) => (
     </div>
 );
 
-// Mobile card — natural-height stacked card (image on top, info below)
+// Mobile card — image on top, info below
 const MobileProjectCard = ({ project }) => (
-    <div className="border border-border overflow-hidden" style={{ borderRadius: '20px' }}>
+    <div className="border border-border overflow-hidden h-full" style={{ borderRadius: '20px' }}>
         <div className="aspect-[16/10] overflow-hidden bg-card">
             <img
                 src={project.image}
@@ -78,69 +79,86 @@ const MobileProjectCard = ({ project }) => (
 );
 
 const TechSection = () => {
-    const wrapperRef = useRef(null);
-    const [isDesktop, setIsDesktop] = useState(() =>
-        typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches
-    );
+    const [[index, direction], setIndex] = useState([0, 0]);
 
-    useEffect(() => {
-        const mq = window.matchMedia('(min-width: 768px)');
-        const onChange = (e) => setIsDesktop(e.matches);
-        mq.addEventListener('change', onChange);
-        return () => mq.removeEventListener('change', onChange);
-    }, []);
+    const paginate = (dir) => {
+        setIndex(([prev]) => [(prev + dir + projects.length) % projects.length, dir]);
+    };
 
-    useEffect(() => {
-        if (!isDesktop) return;
-        const wrapper = wrapperRef.current;
-        if (!wrapper) return;
-        const scroller = wrapper.querySelector('.scroll-stack-scroller');
-        if (!scroller) return;
+    const goTo = (i) => {
+        setIndex(([prev]) => [i, i > prev ? 1 : -1]);
+    };
 
-        const handleWheel = (e) => {
-            const atTop = scroller.scrollTop <= 0;
-            const atBottom = scroller.scrollTop >= scroller.scrollHeight - scroller.clientHeight - 1;
-            if ((e.deltaY < 0 && atTop) || (e.deltaY > 0 && atBottom)) {
-                e.stopPropagation();
-                e.preventDefault();
-                window.scrollBy({ top: e.deltaY });
-            }
-        };
-
-        wrapper.addEventListener('wheel', handleWheel, { capture: true, passive: false });
-        return () => wrapper.removeEventListener('wheel', handleWheel, { capture: true });
-    }, [isDesktop]);
+    const project = projects[index];
 
     return (
         <div>
             <div className="flex items-end justify-between mb-4 pb-4 border-b border-border">
                 <h2 className="text-5xl md:text-8xl font-heading leading-none">Audio Programming</h2>
-                <span className="font-mono text-xs text-muted hidden md:block">
-                    {projects.length} projects
-                </span>
             </div>
 
             <p className="font-body text-sm text-text/50 mb-8 max-w-md leading-relaxed uppercase tracking-wide">
                 Professional audio software built in C++ — plugins, desktop applications, and embedded systems.
             </p>
 
-            {isDesktop ? (
-                <div ref={wrapperRef} style={{ height: '100vh' }}>
-                    <ScrollStack>
-                        {projects.map((project) => (
-                            <ScrollStackItem key={project.title}>
+            {/* Carousel */}
+            <div className="relative overflow-hidden">
+                <div className="relative md:h-[420px]">
+                    <AnimatePresence initial={false} custom={direction} mode="popLayout">
+                        <motion.div
+                            key={project.title}
+                            custom={direction}
+                            initial={{ opacity: 0, x: direction >= 0 ? 60 : -60 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: direction >= 0 ? -60 : 60 }}
+                            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                            className="md:absolute md:inset-0"
+                        >
+                            <div className="hidden md:block h-full">
                                 <ProjectCard project={project} />
-                            </ScrollStackItem>
-                        ))}
-                    </ScrollStack>
+                            </div>
+                            <div className="md:hidden">
+                                <MobileProjectCard project={project} />
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
                 </div>
-            ) : (
-                <div className="flex flex-col gap-6">
-                    {projects.map((project) => (
-                        <MobileProjectCard key={project.title} project={project} />
+            </div>
+
+            {/* Controls */}
+            <div className="flex items-center justify-between mt-6">
+                <div className="flex gap-2">
+                    <button
+                        onClick={() => paginate(-1)}
+                        aria-label="Previous project"
+                        className="w-11 h-11 flex items-center justify-center border border-border text-text/70 hover:bg-card hover:text-text transition-colors"
+                        style={{ borderRadius: '12px' }}
+                    >
+                        <ChevronLeft size={18} />
+                    </button>
+                    <button
+                        onClick={() => paginate(1)}
+                        aria-label="Next project"
+                        className="w-11 h-11 flex items-center justify-center border border-border text-text/70 hover:bg-card hover:text-text transition-colors"
+                        style={{ borderRadius: '12px' }}
+                    >
+                        <ChevronRight size={18} />
+                    </button>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    {projects.map((p, i) => (
+                        <button
+                            key={p.title}
+                            onClick={() => goTo(i)}
+                            aria-label={`Go to project ${i + 1}`}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                                i === index ? 'w-8 bg-text' : 'w-1.5 bg-border hover:bg-text/40'
+                            }`}
+                        />
                     ))}
                 </div>
-            )}
+            </div>
         </div>
     );
 };
